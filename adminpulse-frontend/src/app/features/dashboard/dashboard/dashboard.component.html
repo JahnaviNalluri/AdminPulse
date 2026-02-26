@@ -1,0 +1,154 @@
+<div class="container mt-4">
+
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Admin Dashboard</h2>
+    <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+      Logout
+    </button>
+    <!-- <pre>{{ dashboardData | json }}</pre> -->
+  </div>
+
+  <!-- LOADING -->
+  <div *ngIf="loading" class="text-center mb-3">
+    <h5>Loading...</h5>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="row" [style.opacity]="loading ? 0.5 : 1">
+
+    <div class="col-md-3 mb-3">
+      <div class="card bg-primary text-white p-3"
+           style="cursor:pointer"
+           (click)="showAllUsers()">
+        <h5>Total Users</h5>
+        <h3>{{ dashboardData?.totalUsers }}</h3>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card bg-success text-white p-3"
+           style="cursor:pointer"
+           (click)="showActiveUsers()">
+        <h5>Active Users</h5>
+        <h3>{{ dashboardData?.activeUsers }}</h3>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card bg-warning text-white p-3">
+        <h5>Total Admins</h5>
+        <h3>{{ dashboardData?.totalAdmins }}</h3>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card bg-danger text-white p-3"
+           style="cursor:pointer"
+           (click)="showAllContent()">
+        <h5>Total Content</h5>
+        <h3>{{ dashboardData?.totalContent }}</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DYNAMIC SECTION -->
+  <div class="mt-4" *ngIf="selectedView">
+
+    <!-- USERS -->
+    <div *ngIf="selectedView !== 'content'" class="card p-3 shadow-sm">
+
+      <h4 class="mb-3">Users</h4>
+
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of usersList">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span [class]="user.isActive ? 'text-success fw-bold' : 'text-danger fw-bold'">
+                {{ user.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td>{{ user.role }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm me-2"
+                      (click)="toggleUser(user._id)">
+                Toggle
+              </button>
+              <button class="btn btn-danger btn-sm"
+                      (click)="deleteUser(user._id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- CONTENT -->
+    <div *ngIf="selectedView === 'content'" class="card p-3 shadow-sm">
+
+      <h4 class="mb-3">All Content</h4>
+
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created By</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of contentList">
+            <td>{{ item.title }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.createdBy?.name }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm"
+                      (click)="deleteContent(item._id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+  <!-- CHARTS (ALWAYS IN DOM) -->
+  <div class="row mt-5">
+
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow-sm p-4">
+        <h5>Monthly User Growth</h5>
+        <canvas id="signupChart"></canvas>
+      </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow-sm p-4">
+        <h5>Monthly Content Posting</h5>
+        <canvas id="contentChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+</div>

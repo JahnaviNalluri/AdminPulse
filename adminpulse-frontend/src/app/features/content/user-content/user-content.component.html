@@ -1,0 +1,118 @@
+<div class="container mt-4">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded shadow-sm mb-4 px-3">
+    <a class="navbar-brand fw-bold text-white">Content Dashboard</a>
+
+    <p class="text-white mb-0 ms-3">
+      Total contents: {{ contents.length }}
+    </p>
+
+    <div class="ms-auto d-flex align-items-center">
+      
+      <button type="button"
+              class="btn btn-outline-light btn-sm me-2"
+              [class.active]="activeTab === 'all'"
+              (click)="loadAllContent()">
+        All Posts
+      </button>
+
+      <button type="button"
+              class="btn btn-outline-info btn-sm me-3"
+              [class.active]="activeTab === 'mine'"
+              (click)="loadMyContent()">
+        My Posts
+      </button>
+
+      <button type="button"
+              class="btn btn-danger btn-sm"
+              (click)="logout()">
+        Logout
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- CREATE / EDIT CARD -->
+  <div class="card shadow-lg border-0 mb-4">
+    <div class="card-body">
+      <h5 class="card-title mb-3">
+        {{ editingId ? 'Update Post' : 'Create New Post' }}
+      </h5>
+
+      <input type="text"
+             class="form-control mb-3"
+             [(ngModel)]="title"
+             placeholder="Enter title">
+
+      <textarea class="form-control mb-3"
+                rows="3"
+                [(ngModel)]="description"
+                placeholder="Enter description">
+      </textarea>
+
+      <button type="button"
+              class="btn btn-primary px-4"
+              (click)="saveContent()">
+        {{ editingId ? 'Update' : 'Create' }}
+      </button>
+
+      <button *ngIf="editingId"
+              type="button"
+              class="btn btn-secondary ms-2"
+              (click)="cancelEdit()">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="row">
+
+    <div class="col-md-6 mb-4"
+         *ngFor="let content of contents">
+
+      <div class="card h-100 shadow-sm border-0">
+
+        <div class="card-body">
+          <h5 class="card-title fw-bold">
+            {{ content.title }}
+          </h5>
+
+          <p class="card-text text-muted">
+            {{ content.description }}
+          </p>
+        </div>
+
+        <div class="card-footer bg-white border-0">
+
+          <small class="text-secondary">
+            By: {{ content.createdBy?.name }}
+          </small>
+
+          <div *ngIf="isOwner(content)"
+               class="mt-2">
+
+            <button type="button"
+                    class="btn btn-sm btn-warning me-2"
+                    (click)="edit(content)">
+              Edit
+            </button>
+
+            <button type="button"
+                    class="btn btn-sm btn-danger"
+                    (click)="delete(content._id)">
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

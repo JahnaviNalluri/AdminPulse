@@ -246,3 +246,76 @@ Aggregation Operators:
 - Angular Standalone Components
 - Reactive HTTP Requests
 - Chart Rendering Lifecycle Handling
+
+---
+
+# ⚙️ Setup & Installation
+
+Follow these steps to run the **MERN Content Management Dashboard** locally.
+
+## 1️⃣ Prerequisites
+
+Make sure you have the following installed:
+
+| Tool            | Version Required       |
+|-----------------|----------------------|
+| Node.js         | 25.7.0               |
+| npm             | 10.8.2               |
+| Angular CLI     | 21.1.5               |
+| MongoDB         | Latest stable        |
+
+> You can check your Node and npm versions with:  
+```bash
+node -v
+npm -v
+
+```
+
+## 2️⃣ Clone the Repository
+
+```bash
+
+git clone <your-repo-url>
+cd <your-repo-directory>
+```
+
+## 3️⃣ Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a .env file in the backend root and add environment variables:
+
+```env
+PORT=5000
+MONGO_URI=<your-mongodb-connection-string>
+JWT_SECRET=<your-secret-key>
+```
+
+Start the backend server:
+
+```bash
+npm start
+# or if using nodemon
+npm run dev
+```
+
+### 4️⃣ Frontend Setup
+
+```bash
+
+cd adminpulse-frontend
+npm install
+npm start
+npm build
+```
+
+### 5️⃣ Verify Installation
+
+Access the frontend: http://localhost:4200
+
+Test API endpoints via Postman or frontend UI
+
+Ensure MongoDB is running locally or via Atlas

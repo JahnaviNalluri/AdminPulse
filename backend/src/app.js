@@ -9,7 +9,7 @@ const contentRouter = require("./routes/contentRouter");
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:4200",
+  origin: "https://admin-pulse.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
